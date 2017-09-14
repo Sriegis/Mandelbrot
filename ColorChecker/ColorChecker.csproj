@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FB622E01-FEE4-47BA-8585-96D9C7B8A6E5}</ProjectGuid>
+    <ProjectGuid>{369B0459-4F9E-4E64-BC57-DEFF2EB083C5}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Mandelbrot</RootNamespace>
-    <AssemblyName>Mandelbrot</AssemblyName>
+    <RootNamespace>ColorChecker</RootNamespace>
+    <AssemblyName>ColorChecker</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -43,13 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ContinuousRainbowMaker.cs" />
-    <Compile Include="IRainbowMaker.cs" />
-    <Compile Include="Mandelbrot.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SpiralRainbowMaker.cs" />
-    <Compile Include="SquareRainbowMaker.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

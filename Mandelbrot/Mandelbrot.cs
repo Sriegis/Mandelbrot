@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 
 namespace Mandelbrot
 {
@@ -10,32 +8,13 @@ namespace Mandelbrot
         public Bitmap Picture { get; }
 
         private readonly IRainbowMaker _rainbowMaker;
+        private const int MaxIterations = 255;
         private const double InterpolationFactor = 0.5d;
-        private const int MaxIterations = 256;
-        private readonly List<Color> _colorBucket;
 
         public Mandelbrot(int dimX, int dimY, IRainbowMaker rainbowMaker)
         {
             _rainbowMaker = rainbowMaker;
-            _colorBucket = GenerateColorBucket();
             Picture = GeneratePicture(dimX, dimY);
-        }
-
-        private List<Color> GenerateColorBucket()
-        {
-            Console.WriteLine("Generating color bucket...");
-            var colors = new List<Color>();
-            for (int r = 0; r <= 255; r++)
-            {
-                for (int g = 0; g <= 255; g++)
-                {
-                    for (int b = 0; b <= 255; b++)
-                    {
-                        colors.Add(Color.FromArgb(r, g, b));
-                    }
-                }
-            }
-            return colors;
         }
 
         private Bitmap GeneratePicture(int dimX, int dimY)
@@ -58,40 +37,29 @@ namespace Mandelbrot
 
         private Color GetColor(int iterations, int x, int y)
         {
-            //var iterationRelativeToMax = (double) iterations / MaxIterations;
-            return GetClosestColorFromColorBucket(iterations);
+            // todo: instead of aqua maybe a gradient?
+            var aquaR = 0;
+            var aquaG = 255;
+            var aquaB = 255;
+            var color = MeshColors(iterations, Color.Aqua, _rainbowMaker.GetPixelColor(x, y));
+            return color;
         }
 
-        private Color GetClosestColorFromColorBucket(int iterations)
+        private Color MeshColors(int iterations, Color basicColor, Color rainbow)
         {
-            var closest = _colorBucket.First();
-            foreach (var color in _colorBucket)
-            {
-                var thisColorDifference = Math.Abs(color.R + color.B + color.G - iterations * 3);
-                var closestColorDifference = Math.Abs(closest.R + closest.B + closest.G - iterations * 3);
-                if (thisColorDifference > closestColorDifference)
-                {
-                    closest = color;
-                }
-            }
-            _colorBucket.Remove(closest);
-            return closest;
+            var iterationFactor = (double)iterations / MaxIterations;
+            var red = iterationFactor * rainbow.R + (1 - iterationFactor) * basicColor.R;
+            var green = iterationFactor * rainbow.G + (1 - iterationFactor) * basicColor.G;
+            var blue = iterationFactor * rainbow.B + (1 - iterationFactor) * basicColor.B;
+
+            return Color.FromArgb((int)red, (int)green, (int)blue);
         }
 
-
-        //private Color GetColor(int colVal, int x, int y)
-        //{
-        //    var inverted = 256 - colVal;
-        //    var color = inverted > 250 ? Color.White : Color.FromArgb(inverted, inverted, inverted);
-        //    var rainbowed = ApplyRainbow(color, x, y);
-        //    return rainbowed;
-        //}
 
         private Color ApplyRainbow(Color color, int x, int y)
         {
-            // if white then apply as much as possible, if black, then try to apply little
             var rainbow = _rainbowMaker.GetPixelColor(x, y);
-            var red = InterpolateColor((int) (rainbow.R * color.R / 255d), rainbow.R);
+            var red = InterpolateColor((int)(rainbow.R * color.R / 255d), rainbow.R);
             var green = InterpolateColor((int)(rainbow.G * color.G / 255d), rainbow.G);
             var blue = InterpolateColor((int)(rainbow.B * color.B / 255d), rainbow.B);
             return Color.FromArgb(red, green, blue);
@@ -116,7 +84,7 @@ namespace Mandelbrot
                 iterations += 1;
             }
 
-            return iterations;
+            return Math.Min(iterations * 5, MaxIterations);
         }
 
         private double ScaleCoordinate(int coord, int dim, double scaleStart, double scaleLength)
