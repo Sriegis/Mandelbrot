@@ -8,8 +8,8 @@ namespace Mandelbrot
         {
             Console.WriteLine("Processing...");
 
-            var dimX = 1024;
-            var dimY = 600;
+            var dimX = 512;
+            var dimY = 300;
 
             // resolution for mandebrot must be of ratio 1024/600
 
