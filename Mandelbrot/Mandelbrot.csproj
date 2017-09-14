@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ContinuousRainbowMaker.cs" />
     <Compile Include="IRainbowMaker.cs" />
     <Compile Include="Mandelbrot.cs" />
     <Compile Include="Program.cs" />

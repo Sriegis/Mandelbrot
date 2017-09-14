@@ -8,9 +8,17 @@ namespace Mandelbrot
         {
             Console.WriteLine("Processing...");
 
+            var dimX = 1024;
+            var dimY = 600;
+
             // resolution for mandebrot must be of ratio 1024/600
-            var rainbowMaker = new SquareRainbowMaker();
-            var mandebrot = new Mandelbrot(8192, 4800, rainbowMaker);
+
+            //var rainbowMaker = new SquareRainbowMaker();
+            //var mandebrot = new Mandelbrot(8192, 4800, rainbowMaker);
+
+            var rainbowMaker = new ContinuousRainbowMaker(dimX, dimY);
+
+            var mandebrot = new Mandelbrot(dimX, dimY, rainbowMaker);
 
             Console.WriteLine("Done!");
 
