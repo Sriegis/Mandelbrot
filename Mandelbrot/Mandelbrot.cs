@@ -8,12 +8,15 @@ namespace Mandelbrot
         public Bitmap Picture { get; }
 
         private readonly IRainbowMaker _rainbowMaker;
+        private readonly Color _baseColor;
         private const int MaxIterations = 255;
-        private const double InterpolationFactor = 0.5d;
+        private readonly IRainbowMaker _innerRainbowMaker;
 
-        public Mandelbrot(int dimX, int dimY, IRainbowMaker rainbowMaker)
+        public Mandelbrot(int dimX, int dimY, IRainbowMaker rainbowMaker, IRainbowMaker innerRainbowMaker, Color baseColor)
         {
             _rainbowMaker = rainbowMaker;
+            _baseColor = baseColor;
+            _innerRainbowMaker = innerRainbowMaker;
             Picture = GeneratePicture(dimX, dimY);
         }
 
@@ -22,6 +25,7 @@ namespace Mandelbrot
             var picture = new Bitmap(dimX, dimY);
 
             Console.WriteLine("Generating Mandelbrot set...");
+
             for (var x = 0; x < picture.Width; x++)
             {
                 for (var y = 0; y < picture.Height; y++)
@@ -37,11 +41,7 @@ namespace Mandelbrot
 
         private Color GetColor(int iterations, int x, int y)
         {
-            // todo: instead of aqua maybe a gradient?
-            var aquaR = 0;
-            var aquaG = 255;
-            var aquaB = 255;
-            var color = MeshColors(iterations, Color.Aqua, _rainbowMaker.GetPixelColor(x, y));
+            var color = iterations > MaxIterations - 5 ? _innerRainbowMaker.GetPixelColor(x, y) : MeshColors(iterations, _baseColor, Color.PaleVioletRed);
             return color;
         }
 
@@ -55,20 +55,6 @@ namespace Mandelbrot
             return Color.FromArgb((int)red, (int)green, (int)blue);
         }
 
-
-        private Color ApplyRainbow(Color color, int x, int y)
-        {
-            var rainbow = _rainbowMaker.GetPixelColor(x, y);
-            var red = InterpolateColor((int)(rainbow.R * color.R / 255d), rainbow.R);
-            var green = InterpolateColor((int)(rainbow.G * color.G / 255d), rainbow.G);
-            var blue = InterpolateColor((int)(rainbow.B * color.B / 255d), rainbow.B);
-            return Color.FromArgb(red, green, blue);
-        }
-
-        private int InterpolateColor(int color, int adition)
-        {
-            return color == 255 ? color : Math.Min(255, color + (int)(InterpolationFactor * adition));
-        }
 
         private int GetMandelbrotIterations(int coordX, int coordY, int dimX, int dimY)
         {

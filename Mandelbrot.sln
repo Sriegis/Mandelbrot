@@ -5,12 +5,7 @@ VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mandelbrot", "Mandelbrot\Mandelbrot.csproj", "{FB622E01-FEE4-47BA-8585-96D9C7B8A6E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ColorChecker", "ColorChecker\ColorChecker.csproj", "{369B0459-4F9E-4E64-BC57-DEFF2EB083C5}"
-EndProject
 Global
-	GlobalSection(Performance) = preSolution
-		HasPerformanceSessions = true
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -20,12 +15,11 @@ Global
 		{FB622E01-FEE4-47BA-8585-96D9C7B8A6E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB622E01-FEE4-47BA-8585-96D9C7B8A6E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FB622E01-FEE4-47BA-8585-96D9C7B8A6E5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{369B0459-4F9E-4E64-BC57-DEFF2EB083C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{369B0459-4F9E-4E64-BC57-DEFF2EB083C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{369B0459-4F9E-4E64-BC57-DEFF2EB083C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{369B0459-4F9E-4E64-BC57-DEFF2EB083C5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
 	EndGlobalSection
 EndGlobal
